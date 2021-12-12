@@ -1,0 +1,65 @@
+.profile-container {
+    background-color: #f1f1f1;
+    padding-bottom: 150px;
+    height: auto !important;
+  }
+  
+  .profile-container .img-1 {
+    width: 30px;
+    height: 30px;
+  }
+
+  .imageProfile{
+    height: 250px;
+    width: 250px;
+  }
+
+  .tripCard{
+    left: 500px;
+  }
+  
+  p {
+    margin-bottom: 0;
+  }
+  
+  small {
+    color: #a8a8a8;
+  }
+  
+  .data-container {
+    margin-top: 200px;
+    background-color: #ffffff;
+    width: 900px;
+    height: 450px;
+  }
+
+  .editPhoto{
+    margin-top: 10px;
+    background-color: orange;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .profileSize{
+    width: 120px;
+    height: 80px;
+  }
+  
+  .history-trip {
+    position: absolute;
+    font-weight: bold;
+    height: 49px;
+    left: 110px;
+    top: 830px;
+  }
+
+  .btnChange{
+    background-color: orange !important;
+  }
+
+  .preview-image{
+    background-image: url(../../img/Rectangle\ 12.png);
+  }
