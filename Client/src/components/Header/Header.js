@@ -8,7 +8,23 @@ import "./Header.css";
 import Navbar from "../Navbar/Navbar";
 import Card from "../Items/card/Card";
 
-function Header() {
+function Header(props) {
+    const { trips, searchData, setSearchData, setIsSearching } = props
+
+    const handleSearch = (e) => {
+        setSearchData(e.target.value);
+        e.target.value !== "" ? setIsSearching(true) : setIsSearching(false);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const result = trips?.filter((item) =>
+            item?.title.toLowerCase().includes(searchData.toLowerCase())
+        );
+        setSearchData(result)
+    };
+
+
     return (
         <div className="header-image"
             style={{
@@ -24,16 +40,18 @@ function Header() {
                 Find great places to holliday
             </label>
             <div className="container-fluid d-flex input-container">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" onSubmit={handleSubmit}>
                     <input
                         class="form-control"
                         id="basic-addon2"
-                        aria-label="Recipient's username"
+                        aria-label="search"
+                        onChange={handleSearch}
+                        value={searchData}
                         aria-describedby="basic-addon2"
                         type="search"
                         placeholder="Search"
                     />
-                    <a class="input-group-text"
+                    <a className="input-group-text"
                         id="basic-addon2"
                         href="/"
                     >
