@@ -10,13 +10,13 @@ import { AuthContext } from "../../../Context/AuthContextProvider";
 
 // Import Style
 import "./DropdownComp.css";
-import Profile from "../../../img/elips.png";
+// import Profile from "../../../img/elips.png";
 import Icon from "../../../img/Icon1.png";
 import User from "../../../img/user 2.png";
 import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
-import Polygon from "../../../img/Polygon.png";
-import { Navbar, Nav, Container } from "react-bootstrap";
+// import Polygon from "../../../img/Polygon.png";
+import { Navbar, Nav } from "react-bootstrap";
 
 // Import API
 import { API } from "../../../config/api";

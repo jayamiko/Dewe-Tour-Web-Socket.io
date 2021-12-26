@@ -7,11 +7,6 @@
   justify-content: space-between;
 }
 
-.nav-drop {
-  width: 20vw;
-  position: relative;
-}
-
 .btn-login {
   border-radius: 4px;
   padding: 4px 28px;
