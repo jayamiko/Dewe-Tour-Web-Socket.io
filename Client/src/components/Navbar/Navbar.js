@@ -12,39 +12,76 @@ import UserDropdown from "../Items/dropdown/UserDropdown";
 // Import Style
 import "./Navbar.css";
 import Icon from "../../img/Icon1.png";
+import {
+    Navbar,
+    Container,
+    Nav,
+    NavDropdown,
+} from 'react-bootstrap';
 
 
-function Navbar() {
+function NavbarComp() {
 
     const { stateAuth, dispatch } = useContext(AuthContext);
 
     return (
-        <div>
-            <div className="nav">
-                <div className="nav-logo">
-                    <Link to="/">
-                        <img src={Icon} alt="dewe tour" />
-                    </Link>
+        <Navbar bg="dark" expand="lg" className="navbar-comp">
+            <Container fluid style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: '85px',
+                width:'100vw',
+                padding:'10px'
+            }}>
+                <div >
+                    <Navbar.Brand href="#" className='navbar-brand'>
+                        <Link to="/">
+                            <img src={Icon} alt="dewe tour" />
+                        </Link>
+                    </Navbar.Brand>
                 </div>
-                <div className={`nav-title `}>
-                    {stateAuth?.isLogin || stateAuth?.isAdmin ? (
+                <div >
+                    {stateAuth.isLogin || stateAuth.isAdmin ? (
                         stateAuth.user.status === "admin" ? (
                             <AdminDropdown />
                         ) : (
                             <UserDropdown />
                         )
                     ) : (
-                        <ul>
-                            <li>
-                                <Login />
-                                <Register />
-                            </li>
-                        </ul>
+                        <div style={{
+                            display:'flex',
+                         flexDirection:'row-reverse',
+                         }}>
+                            <Navbar.Toggle aria-controls="navbarScroll"
+                            className="nav-toggle"
+                                style={{
+                                    border: 'solid white 1px',
+                                    background: 'white',
+                                    height:'40px',
+                                    marginLeft:'20px',
+                                    marginTop:'15px',
+                                    marginRight:'10px'
+                                }}
+                            />
+                            <Navbar.Collapse id="navbarScroll" >
+                                <Nav
+                                    className="me-auto my-2 my-lg-0 "
+                                    style={{ maxHeight: '100px' }}
+                                    navbarScroll>
+                                    <div className="btn-login-register">
+                                        <Nav.Link href="#action1">
+                                            <Login />
+                                            <Register />
+                                        </Nav.Link>
+                                    </div>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </div>
                     )}
                 </div>
-            </div>
-        </div>
+            </Container>
+        </Navbar >
     );
 }
 
-export default Navbar;
+export default NavbarComp;

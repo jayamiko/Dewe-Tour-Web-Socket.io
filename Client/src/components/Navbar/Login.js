@@ -87,9 +87,10 @@ export default function Login() {
 
     return (
         <>
-            <a onClick={openModalLogin} className="btn-one">
+            <button onClick={openModalLogin} className="btn-login" href
+                expand="lg">
                 Login
-            </a>
+            </button>
             <Modal show={modal}>
                 <Modal.Body className="modal-content">
                     <img src={Palm} alt=""></img>

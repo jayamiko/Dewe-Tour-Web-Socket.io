@@ -196,7 +196,7 @@ export default function Invoice(props) {
                                     <td>Total</td>
                                     <td>:</td>
                                     <td className="text-danger">
-                                        IDR. {formatNumber(dataPay.trip.price * dataPay.counterQty)}
+                                        Rp. {formatNumber(dataPay.trip.price * dataPay.counterQty)}
                                     </td>
                                 </tr>
                             </tbody>

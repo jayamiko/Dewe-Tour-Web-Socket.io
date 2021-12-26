@@ -154,7 +154,7 @@ export default function PaymentCard({ data, setData }) {
                                         <td>Total</td>
                                         <td>:</td>
                                         <td className="text-danger">
-                                            IDR. {formatNumber(data?.counterQty * data?.trip.price)}
+                                            Rp. {formatNumber(data?.counterQty * data?.trip.price)}
                                         </td>
                                     </tr>
                                 </tbody>

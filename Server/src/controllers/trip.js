@@ -3,6 +3,8 @@ const { trip, country } = require("../../models");
 const fs = require("fs");
 const Joi = require("joi");
 
+const convertRupiah = require('rupiah-format')
+
 exports.addTrip = async (req, res) => {
     const schema = Joi.object({
         title: Joi.string().min(5).required(),
@@ -112,7 +114,7 @@ exports.getTrips = async (req, res) => {
             id: item.id,
             title: item.title,
             country: item.country,
-            price: item.price,
+            price: convertRupiah.convert(item.price),
             quota: item.quota,
             maxQuota: item.maxQuota,
             image: JSON.parse(item.image).map((image, index) => ({

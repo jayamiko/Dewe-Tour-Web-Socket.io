@@ -15,6 +15,11 @@ import User from "../../../img/user 2.png";
 import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
 import Polygon from "../../../img/Polygon.png";
+import {
+    Navbar,
+    Nav,
+    NavDropdown,
+} from 'react-bootstrap'
 
 // Import API
 import { API } from '../../../config/api'
@@ -53,6 +58,56 @@ function UserDropdown() {
 
     return (
         <>
+            <>
+                <Navbar.Toggle aria-controls="navbarScroll"
+                    style={{
+                        border: 'solid white 1px',
+                        background: 'white',
+                        position: 'absolute',
+                        left: '340px',
+                        top: '30px'
+                    }}
+                />
+                <Navbar.Collapse id="navbarScroll" >
+                    <Nav
+                        className="me-auto my-2 my-lg-0 nav-drop-user"
+                        style={{ maxHeight: '100px' }}
+                        navbarScroll>
+                        <div className="nav-item">
+                            <Nav.Link href="#action1" className="nav-link">
+                                <Link to="/profile" style={{textDecoration:'none'}}>
+                                    <div className="d-flex align-items-center gap-2"
+                                        style={{ color: 'white' }}
+                                    >
+                                        <img src={User} alt=""></img>
+                                        Profile
+                                    </div>
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link href="#action1" className="nav-link">
+                                <Link to="/payments" style={{textDecoration:'none'}}>
+                                    <div className="d-flex align-items-center gap-2"
+                                        style={{ color: 'white' }}
+                                    >
+                                        <img src={Payment} alt=""></img>
+                                        Payment
+                                    </div>
+                                </Link>
+                            </Nav.Link>
+                            <Nav.Link href="#action1" className="nav-link">
+                                <Link onClick={logoutHandle} style={{textDecoration:'none'}}>
+                                    <div className="d-flex align-items-center gap-2"
+                                        style={{ color: 'white' }}
+                                    >
+                                        <img src={Logout} alt=""></img>
+                                        Logout
+                                    </div>
+                                </Link>
+                            </Nav.Link>
+                        </div>
+                    </Nav>
+                </Navbar.Collapse>
+            </>
             <div className="dropdown p-5 ">
                 <img className="polygon" src={Polygon} alt="" />
                 {profile?.photo === null ? (

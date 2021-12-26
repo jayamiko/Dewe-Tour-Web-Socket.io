@@ -31,7 +31,6 @@ function Header(props) {
                 marginBottom: '250px',
             }}
         >
-            {<Navbar />}
             <div className="container-lg">
                 <h1>Explore</h1>
                 <h2>your amazing city together</h2>

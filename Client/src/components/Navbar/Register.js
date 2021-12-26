@@ -158,12 +158,12 @@ export default function Register() {
                 </Modal.Body>
             </Modal>
             <span>
-                <a
-                    className="btn-two"
+                <button
+                    className="btn-register"
                     onClick={openModalRegister}
                     href="#services">
                     Register
-                </a>
+                </button>
             </span>
         </>
     )

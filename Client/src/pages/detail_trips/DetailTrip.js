@@ -313,7 +313,7 @@ function DetailTrip() {
                     <div style={{ marginTop: '15px' }}>
                         <div className="d-flex justify-content-between fw-bold fs-5">
                             <div style={{ color: 'orange', fontFamily: 'Avenir' }}>
-                                IDR.
+                                Rp.
                                 <span style={{ marginLeft: '10px' }}>{rupiah(detailTrip?.price)}</span>/
                                 <span style={{ color: 'black' }}>Person</span>
                             </div>
@@ -347,7 +347,7 @@ function DetailTrip() {
                                     fontFamily: 'Avenir'
                                 }}
                             >
-                                IDR. {rupiah(totalPrice)}
+                                Rp. {rupiah(totalPrice)}
                             </div>
                         </div>
                         <hr />

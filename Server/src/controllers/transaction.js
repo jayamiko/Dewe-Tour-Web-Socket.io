@@ -1,5 +1,6 @@
 const { transaction, trip, user, country } = require('../../models')
 const Joi = require("joi")
+const convertRupiah = require('rupiah-format')
 
 exports.addTransaction = async (req, res) => {
     const schema = Joi.object({
@@ -118,7 +119,7 @@ exports.getTransactions = async (req, res) => {
             return {
                 id: item.id,
                 counterQty: item.counterQty,
-                total: item.total,
+                total: convertRupiah.convert(item.total),
                 status: item.status,
                 attachment: attachment,
                 createdAt: item.createdAt,
