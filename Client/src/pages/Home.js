@@ -10,6 +10,7 @@ import noResult from '../img/no-result.png';
 import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
 import GroupTour from "../components/Main/Main";
+import NavbarUser from '../components/Items/dropdown/UserDropdown'
 import Footer from "../components/Footer/Footer";
 import { AuthContext } from "../Context/AuthContextProvider";
 
@@ -46,7 +47,6 @@ function Home() {
                     </>
                 ) : (
                     <div>
-                        <Navbar />
                         <Header
                             trips={trips}
                             setIsSearching={setIsSearching}
