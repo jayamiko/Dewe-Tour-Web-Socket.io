@@ -1,34 +1,46 @@
 // Import React
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../../Context/AuthContextProvider";
+import React, {useEffect} from "react";
+import {Link, useHistory} from "react-router-dom";
+import store from "../../../reducers/store";
 
 // Import Style
 import "./DropdownComp.css";
-import Profile from "../../../img/elips.png";
+import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Logout from "../../../img/logout.png";
 import Icon from "../../../img/Icon1.png";
-import Polygon from "../../../img/Polygon.png";
-// import iconTrans from "../../../img/icontrans.png";
-import { Navbar, Nav } from "react-bootstrap";
+import {Navbar, Nav} from "react-bootstrap";
+
+// Import API
+import checkUser from "../../../config/auth";
+import {setAuthToken} from "../../../config/api";
+
+toast.configure();
 
 function AdminDropdown() {
   const history = useHistory();
-  const { dispatch } = useContext(AuthContext);
-  const logoutHandle = (e) => {
-    e.preventDefault();
-    dispatch({
+  const logoutSession = () => {
+    store.dispatch({
       type: "LOGOUT",
-      isLogin: false,
-      isadmin: false,
-      user: {
-        email: "",
-        password: "",
-      },
     });
+
     history.push("/");
+    window.location.reload();
+    toast.success("Logout success, welcome back anytime", {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2000,
+    });
   };
+
+  useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   return (
     <>
@@ -41,26 +53,26 @@ function AdminDropdown() {
           </Navbar.Brand>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
-            style={{ background: "white" }}
+            style={{background: "white"}}
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" className="nav-item-admin">
               <Nav.Link href="#transaction" className="nav-link">
-                <Link to="/list-transaction" style={{ textDecoration: "none" }}>
+                <Link to="/list-transaction" style={{textDecoration: "none"}}>
                   <div
                     className="d-flex align-items-center gap-2"
-                    style={{ color: "white" }}
+                    style={{color: "white"}}
                   >
                     <img src="/assets/journey1.png" alt=""></img>
-                    Profile
+                    Transations
                   </div>
                 </Link>
               </Nav.Link>
               <Nav.Link href="#logout" className="nav-link">
-                <Link onClick={logoutHandle} style={{ textDecoration: "none" }}>
+                <Link onClick={logoutSession} style={{textDecoration: "none"}}>
                   <div
                     className="d-flex align-items-center gap-2"
-                    style={{ color: "white" }}
+                    style={{color: "white"}}
                   >
                     <img src={Logout} alt=""></img>
                     Logout

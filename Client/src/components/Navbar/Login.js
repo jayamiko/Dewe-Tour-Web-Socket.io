@@ -1,21 +1,30 @@
-import { useState, useContext } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+// Import React
+import {useState, useEffect} from "react";
+import {useHistory} from "react-router-dom";
+import store from "../../reducers/store";
+import {useSelector} from "react-redux";
+
+// Import Style
+import {Button, Modal, Form} from "react-bootstrap";
 import Palm from "../../img/palm1.png";
-import { AuthContext } from "../../Context/AuthContextProvider";
-import { API, setAuthToken } from "../../config/api";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+// Import API
+import {API, setAuthToken} from "../../config/api";
+import checkUser from "../../config/auth";
+
 toast.configure();
 
 export default function Login() {
+  const history = useHistory();
+
+  const isLoginSession = useSelector((state) => state.isLogin);
   const [modal, setModal] = useState(false);
   const [registerModal, setRegisterModal] = useState(false);
-  const { stateAuth, dispatch } = useContext(AuthContext);
-  let history = useHistory();
 
   const checkAuth = () => {
-    if (stateAuth.isLogin === true) {
+    if (isLoginSession) {
       history.push("/");
     }
   };
@@ -36,7 +45,7 @@ export default function Login() {
     password: "",
   });
 
-  const { email, password } = formLogin;
+  const {email, password} = formLogin;
 
   const LoginHandleChange = (e) => {
     setFormLogin({
@@ -45,43 +54,52 @@ export default function Login() {
     });
   };
 
-  const loginHandleSubmit = async (e) => {
+  const loginSession = async (event) => {
     try {
-      e.preventDefault();
+      event.preventDefault();
 
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          "Content-type": "application/json",
         },
       };
 
       const body = JSON.stringify(formLogin);
+
       const response = await API.post("/login", body, config);
-      setAuthToken(response.data.data.token);
 
       if (response?.status === 200) {
-        dispatch({
+        toast.success("Login Success", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+        store.dispatch({
           type: "LOGIN",
           payload: response.data.data,
         });
 
-        if (response.data.data.status === "admin") {
-          console.log(response.data.data.status);
-          history.push("/");
-          toast.success(`Login Success`, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: 2000,
-          });
-        }
+        setAuthToken(response.data.data.token);
       }
+
+      checkUser();
     } catch (error) {
       console.log(error);
-      toast.error(`Email and Password is Invalid`, {
+      toast.success("Login Failed", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,
       });
     }
   };
+
+  useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   return (
     <>
@@ -123,7 +141,7 @@ export default function Login() {
             </Form.Group>
             <div class="d-flex flex-column gap-2 ">
               <Button
-                onClick={loginHandleSubmit}
+                onClick={loginSession}
                 className="text-white fw-bold"
                 variant="warning"
                 type="submit"

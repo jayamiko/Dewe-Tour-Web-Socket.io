@@ -1,20 +1,27 @@
-import { useContext, useEffect, useState } from "react";
+// import React
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
+// Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
 import ModalPopUp from "../../components/Items/modal/popUp";
-import { toast } from "react-toastify";
+
+// Import Style
+import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { API } from "../../config/api";
-import { AuthContext } from "../../Context/AuthContextProvider";
+// Import API
+import {API} from "../../config/api";
 
 toast.configure();
 
 export default function Payment() {
+  const currentState = useSelector((state) => state);
+  const stateAuth = currentState.user;
+
   const [isShow, setIsShow] = useState(false);
-  const { stateAuth } = useContext(AuthContext);
   const [transaction, setTransaction] = useState(null);
 
   const handleClose = () => {
@@ -25,7 +32,7 @@ export default function Payment() {
     try {
       const response = await API.get("/transactions");
       const filteredTransactions = response.data.data.filter(
-        (item) => item.user.id === stateAuth.user.id
+        (item) => item.user.id === stateAuth.id
       );
       setTransaction(filteredTransactions[filteredTransactions.length - 1]);
     } catch (error) {
@@ -102,7 +109,7 @@ export default function Payment() {
                       className={`btn btn-primary mt-2 fw-bold text-white ${
                         transaction?.status === "Waiting Approve" && "d-none"
                       }`}
-                      style={{ width: 213, height: 50 }}
+                      style={{width: 213, height: 50}}
                       onClick={handlePay}
                     >
                       PAY

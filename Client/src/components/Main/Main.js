@@ -1,9 +1,13 @@
 // Import React
-import { Link, useHistory } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
-export default function GroupTour({ data, isAdmin, searchData }) {
+export default function GroupTour({data, isAdmin, searchData}) {
   const history = useHistory();
-
+  const rupiah = (number) => {
+    return new Intl.NumberFormat("id-ID", {
+      minimumFractionDigits: 0,
+    }).format(number);
+  };
   return (
     <section className="group-tour mb-5">
       <div className="container">
@@ -11,7 +15,7 @@ export default function GroupTour({ data, isAdmin, searchData }) {
           {isAdmin ? (
             <div
               className="d-flex justify-content-between"
-              style={{ paddingTop: 70 }}
+              style={{paddingTop: 70}}
             >
               <h2
                 className="fs-1 fw-bold"
@@ -101,12 +105,12 @@ export default function GroupTour({ data, isAdmin, searchData }) {
                           </h5>
                           <div className="card-text d-flex justify-content-between">
                             {isAdmin ? (
-                              <span style={{ color: "orange" }}>
+                              <span style={{color: "orange"}}>
                                 Rp. {(item.maxQuota - item.quota) * item.price}
                               </span>
                             ) : (
-                              <span style={{ color: "orange" }}>
-                                {item.price}
+                              <span style={{color: "orange"}}>
+                                Rp. {rupiah(item.price)}
                               </span>
                             )}
                             <span className="text-muted">

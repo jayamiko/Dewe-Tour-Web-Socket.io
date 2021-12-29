@@ -1,18 +1,18 @@
 // Import React
-import React, { useContext } from "react";
-import { useEffect, useState } from "react";
+import React from "react";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
 // Import Components
-import { Container } from "react-bootstrap";
-import InputFileAvatar from "./updateAvatar";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import { AuthContext } from "../../Context/AuthContextProvider";
 import HistoryPayment from "../../components/Items/card/HistoryPayment";
+import InputFileAvatar from "./updateAvatar";
 import Box from "../../components/Items/card/Box";
 
 // Import Style
 import "./Profile.css";
+import {Container} from "react-bootstrap";
 import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
 import Call from "../../img/phone.png";
@@ -20,13 +20,15 @@ import Map from "../../img/map.png";
 import Nodata from "../../img/folder.png";
 
 // Import API
-import { API } from "../../config/api";
+import {API} from "../../config/api";
 
 export const Profile = () => {
-  const { stateAuth, dispatch } = useContext(AuthContext);
   const [profile, setProfile] = useState([]);
   const [trans, setTrans] = useState([]);
   const [filterData, setFilterData] = useState([]);
+
+  const currentState = useSelector((state) => state);
+  const stateAuth = currentState.user;
 
   // Profile
   const getProfile = async () => {
@@ -50,7 +52,7 @@ export const Profile = () => {
       const mappedData = datas.map((data) => {
         data.trip.dateTrip = new Date(data.trip.dateTrip).toLocaleDateString(
           "en-GB",
-          { weekday: "long", year: "numeric", month: "long", day: "numeric" }
+          {weekday: "long", year: "numeric", month: "long", day: "numeric"}
         );
         return data;
       });
@@ -70,13 +72,11 @@ export const Profile = () => {
     const status = e.target.id;
 
     const data = trans.filter(
-      (item) => item.user.id === stateAuth.user.id && item.status === status
+      (item) => item.user.id === stateAuth.id && item.status === status
     );
 
     setFilterData(data);
   };
-
-  console.log(trans);
 
   return (
     <>
@@ -85,7 +85,7 @@ export const Profile = () => {
       </div>
       <div className="profile-container ">
         {profile
-          .filter((user) => user.email === stateAuth.user.email)
+          .filter((user) => user.email === stateAuth.email)
           .map((myProfile) => (
             <Container className="d-flex px-5 py-4  data-container rounded justify-content-between">
               <div className="profile-content px-4">
@@ -119,10 +119,7 @@ export const Profile = () => {
                   </div>
                 </div>
               </div>
-              <InputFileAvatar
-                userId={stateAuth.user.id}
-                avatar={myProfile.photo}
-              />
+              <InputFileAvatar userId={stateAuth.id} avatar={myProfile.photo} />
             </Container>
           ))}
 
@@ -219,7 +216,7 @@ export const Profile = () => {
                       alt=""
                       width="450px"
                       height="450px"
-                      style={{ marginLeft: "450px" }}
+                      style={{marginLeft: "450px"}}
                     />
                     <h1
                       style={{

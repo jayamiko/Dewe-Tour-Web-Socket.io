@@ -1,53 +1,50 @@
+// Import React
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
+
+// Import Pages
 import DetailTrip from "./pages/detail_trips/DetailTrip";
 import Home from "./pages/Home";
 import Payment from "./pages/payment/Payment";
 import Profile from "./pages/profile/Profile";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AddTrip from "./pages/addTrip/addTrip";
-import PrivateRoute from "./components/PrivateRoutes/PrivateRoutes";
 import ListTransaction from "./pages/list_transactions/ListTransaction";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "./Context/AuthContextProvider";
-import { API, setAuthToken } from "./config/api";
-import './App.css'
+import PrivateRoute from "./components/PrivateRoutes/PrivateRoutes";
+import checkUser from "./config/auth";
+
+// Import Style
+import "./App.css";
+
+// Import API
+import {setAuthToken} from "./config/api";
+
 // init token on axios every time the app is refreshed
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
 function App() {
-
-  const { stateAuth, dispatch } = useContext(AuthContext);
-
-  const checkUser = async () => {
-    try {
-      const response = await API.get("/check-auth");
-
-      if (response.status !== 200) {
-        dispatch({
-          type: "AUTH_ERROR",
-        });
-      }
-
-      let payload = response.data.data.user;
-      payload.token = localStorage.token;
-      dispatch({
-        type: "AUTH_SUCCESS",
-        payload,
-      });
-    } catch (error) {
-      console.log(error);
-      dispatch({
-        type: "AUTH_ERROR",
-      });
+  useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
     }
-  };
+  });
 
   useEffect(() => {
     checkUser();
   }, []);
 
-  return (
+  const currentState = useSelector((state) => state);
+
+  return currentState.isLoading ? (
+    <div className="loading-section">
+      <div className="loading">
+        <p>loading</p>
+        <span></span>
+      </div>
+    </div>
+  ) : (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
@@ -55,7 +52,11 @@ function App() {
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/add-trip" component={AddTrip} />
-        <PrivateRoute exact path="/list-transaction" component={ListTransaction} />
+        <PrivateRoute
+          exact
+          path="/list-transaction"
+          component={ListTransaction}
+        />
       </Switch>
     </BrowserRouter>
   );
