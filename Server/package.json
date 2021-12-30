@@ -24,6 +24,7 @@
     "path": "^0.12.7",
     "rupiah-format": "^1.0.0",
     "sequelize": "^6.8.0",
-    "sequelize-cli": "^5.0.0"
+    "sequelize-cli": "^5.0.0",
+    "socket.io": "^4.4.0"
   }
 }
