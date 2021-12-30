@@ -1,7 +1,7 @@
 // Import React
 import React, {useEffect} from "react";
 import {Link, useHistory} from "react-router-dom";
-import store from "../../../reducers/store";
+import store from "../../../store";
 
 // Import Style
 import "./DropdownComp.css";
@@ -12,7 +12,7 @@ import Icon from "../../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
 // Import API
-import checkUser from "../../../config/auth";
+import checkUser from "../../../actions/auth";
 import {setAuthToken} from "../../../config/api";
 
 toast.configure();

@@ -1,6 +1,6 @@
 // Import React
 import {useState} from "react";
-import store from "../../../reducers/store";
+import store from "../../../store";
 
 // Import Style
 import {Modal} from "react-bootstrap";
@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Import API
 import {API, setAuthToken} from "../../../config/api";
-import checkUser from "../../../config/auth";
+import checkUser from "../../../actions/auth";
 
 toast.configure();
 

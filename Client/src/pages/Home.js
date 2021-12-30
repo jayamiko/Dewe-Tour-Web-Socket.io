@@ -22,6 +22,7 @@ function Home() {
   const [isSearching, setIsSearching] = useState(false);
   const currentState = useSelector((state) => state);
   const isAdmin = currentState.user.status === "admin";
+  console.log(currentState);
 
   const getTrips = async () => {
     try {

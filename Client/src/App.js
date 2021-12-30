@@ -11,7 +11,7 @@ import Profile from "./pages/profile/Profile";
 import AddTrip from "./pages/addTrip/addTrip";
 import ListTransaction from "./pages/list_transactions/ListTransaction";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoutes";
-import checkUser from "./config/auth";
+import checkUser from "./actions/auth";
 
 // Import Style
 import "./App.css";

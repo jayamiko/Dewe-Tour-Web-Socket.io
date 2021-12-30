@@ -1,10 +1,10 @@
 // Import React
 import React from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
-import store from "../../../reducers/store";
+import store from "../../../store";
 
 // Import Style
 import "./DropdownComp.css";
@@ -18,7 +18,7 @@ import {Navbar, Nav} from "react-bootstrap";
 
 // Import API
 import {API, setAuthToken} from "../../../config/api";
-import checkUser from "../../../config/auth";
+import checkUser from "../../../actions/auth";
 
 toast.configure();
 

@@ -1,7 +1,7 @@
 // Import React
 import {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
-import store from "../../reducers/store";
+import store from "../../store";
 import {useSelector} from "react-redux";
 
 // Import Style
@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Import API
 import {API, setAuthToken} from "../../config/api";
-import checkUser from "../../config/auth";
+import checkUser from "../../actions/auth";
 
 toast.configure();
 
