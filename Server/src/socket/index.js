@@ -38,7 +38,7 @@ const socketIo = (io) => {
           limit: 15, // will show only 15 data
         });
 
-        socket.emit("data trans", transactions);
+        socket.emit("data transactions", transactions);
       } catch (error) {
         throw error;
       }

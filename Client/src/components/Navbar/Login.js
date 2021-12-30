@@ -84,7 +84,7 @@ export default function Login() {
       checkUser();
     } catch (error) {
       console.log(error);
-      toast.success("Login Failed", {
+      toast.error("Login Failed", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,
       });

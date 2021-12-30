@@ -11,12 +11,14 @@ import Profile from "./pages/profile/Profile";
 import AddTrip from "./pages/addTrip/addTrip";
 import ListTransaction from "./pages/list_transactions/ListTransaction";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoutes";
-import checkUser from "./actions/auth";
+import Chat from "./pages/Chat/Chat";
+import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
 
 // Import Style
 import "./App.css";
 
 // Import API
+import checkUser from "./actions/auth";
 import {setAuthToken} from "./config/api";
 
 // init token on axios every time the app is refreshed
@@ -51,12 +53,24 @@ function App() {
         <Route exact path="/detail/:id" component={DetailTrip} />
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/profile" component={Profile} />
+        <Route path="/message">
+          <Chat />
+        </Route>
+
+        {/* Admin Only */}
+        <PrivateRoute path="/admin/message" component={ChatAdmin} />
         <PrivateRoute exact path="/add-trip" component={AddTrip} />
         <PrivateRoute
           exact
           path="/list-transaction"
           component={ListTransaction}
         />
+
+        {/* if route is not exist, send default route */}
+        {/* <Route>
+          <Redirect to="/not-found" />
+          <NotFound />
+        </Route> */}
       </Switch>
     </BrowserRouter>
   );

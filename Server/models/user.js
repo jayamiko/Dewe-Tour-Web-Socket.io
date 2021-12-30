@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // define association here
       user.hasMany(models.chat, {
         as: "senderMessage",
         foreignKey: {
@@ -21,15 +22,16 @@ module.exports = (sequelize, DataTypes) => {
           name: "idRecipient",
         },
       });
+    }
   }
   user.init(
     {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      status: DataTypes.STRING,
-      phone: DataTypes.INTEGER,
+      phone: DataTypes.STRING,
       address: DataTypes.STRING,
+      status: DataTypes.STRING,
       photo: DataTypes.STRING,
     },
     {
