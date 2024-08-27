@@ -64,7 +64,7 @@ exports.addTrip = async (req, res) => {
       ...tripData,
       image: JSON.parse(tripData.image).map((image, index) => ({
         id: index + 1,
-        url: "http://localhost:5000/uploads/" + image,
+        url: "http://localhost:8080/uploads/" + image,
       })),
     };
 
@@ -119,7 +119,7 @@ exports.getTrips = async (req, res) => {
       maxQuota: item.maxQuota,
       image: JSON.parse(item.image).map((image, index) => ({
         id: index + 1,
-        url: "http://localhost:5000/uploads/" + image,
+        url: "http://localhost:8080/uploads/" + image,
       })),
     }));
 
@@ -162,7 +162,7 @@ exports.getTrip = async (req, res) => {
       ...data,
       image: JSON.parse(data.image).map((image, index) => ({
         id: index + 1,
-        url: "http://localhost:5000/uploads/" + image,
+        url: "http://localhost:8080/uploads/" + image,
       })),
     };
 

@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class trip extends Model {
     /**
@@ -13,28 +11,31 @@ module.exports = (sequelize, DataTypes) => {
       trip.belongsTo(models.country, {
         as: "country",
         foreignKey: {
-          name: "idCountry"
+          name: "country_id",
         },
-      })
+      });
     }
-  };
-  trip.init({
-    title: DataTypes.STRING,
-    idCountry: DataTypes.INTEGER,
-    accomodation: DataTypes.STRING,
-    transportation: DataTypes.STRING,
-    eat: DataTypes.STRING,
-    day: DataTypes.INTEGER,
-    night: DataTypes.INTEGER,
-    dateTrip: DataTypes.DATE,
-    quota: DataTypes.INTEGER,
-    maxQuota: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    image: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'trip',
-  });
+  }
+  trip.init(
+    {
+      title: DataTypes.STRING,
+      country_id: DataTypes.INTEGER,
+      accomodation: DataTypes.STRING,
+      transportation: DataTypes.STRING,
+      eat: DataTypes.STRING,
+      day: DataTypes.INTEGER,
+      night: DataTypes.INTEGER,
+      dateTrip: DataTypes.DATE,
+      quota: DataTypes.INTEGER,
+      maxQuota: DataTypes.INTEGER,
+      price: DataTypes.INTEGER,
+      description: DataTypes.STRING,
+      image: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "trip",
+    }
+  );
   return trip;
 };

@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class country extends Model {
     /**
@@ -14,16 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       country.hasMany(models.trip, {
         as: "trip",
         foreignKey: {
-          name: "idCountry",
+          name: "country_id",
         },
       });
     }
   }
-  country.init({
-    name: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'country',
-  });
+  country.init(
+    {
+      country_name: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "country",
+    }
+  );
   return country;
 };
