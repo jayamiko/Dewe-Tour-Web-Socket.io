@@ -97,7 +97,7 @@ exports.getTransactions = async (req, res) => {
             exclude: [
               "createdAt",
               "updatedAt",
-              "idCountry",
+              "country",
               "description",
               "image",
             ],
@@ -220,7 +220,7 @@ exports.updatePay = async (req, res) => {
             },
           },
           attributes: {
-            exclude: ["createdAt", "updatedAt", "idCountry", "description"],
+            exclude: ["createdAt", "updatedAt", "country", "description"],
           },
         },
       ],
@@ -274,7 +274,7 @@ exports.updateConfirmTransaction = async (req, res) => {
             exclude: [
               "createdAt",
               "updatedAt",
-              "idCountry",
+              "country",
               "description",
               "quota",
               "image",

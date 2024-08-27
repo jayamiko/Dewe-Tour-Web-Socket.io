@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('trips', {
+    await queryInterface.createTable("trips", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
-      idCountry: {
+      country: {
         type: Sequelize.INTEGER,
         references: {
           model: "countries",
@@ -21,50 +21,50 @@ module.exports = {
         onDelete: "CASCADE",
       },
       accomodation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       transportation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       eat: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       day: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       night: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       dateTrip: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       quota: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       maxQuota: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('trips');
-  }
+    await queryInterface.dropTable("trips");
+  },
 };

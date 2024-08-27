@@ -60,7 +60,7 @@ const AddTrip = () => {
         data.append("image", input.image[i]);
       }
       data.set("title", input.title);
-      data.set("country_id", input.country);
+      data.set("country", input.country);
       data.set("accomodation", input.accomodation);
       data.set("transportation", input.transportation);
       data.set("eat", input.eat);

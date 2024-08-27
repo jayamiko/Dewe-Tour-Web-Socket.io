@@ -2,16 +2,35 @@ const { trip, country } = require("../../models");
 
 const fs = require("fs");
 const Joi = require("joi");
+const path = require("path");
 
-const convertRupiah = require("rupiah-format");
-
+function deleteFiles(filenames) {
+  filenames.forEach((filename) => {
+    const filePath = path.join(__dirname, "uploads", filename);
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error(`File not found: ${filePath}`);
+        return;
+      }
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error(
+            `Failed to delete file: ${filePath} [Error: ${err.message}]`
+          );
+        } else {
+          console.log(`File successfully deleted: ${filePath}`);
+        }
+      });
+    });
+  });
+}
 exports.addTrip = async (req, res) => {
   const schema = Joi.object({
     title: Joi.string().min(5).required(),
-    idCountry: Joi.number().required(),
-    accomodation: Joi.string().min(5).required(),
-    transportation: Joi.string().min(5).required(),
-    eat: Joi.string().min(5).required(),
+    country: Joi.string().required(),
+    accomodation: Joi.string().required(),
+    transportation: Joi.string().required(),
+    eat: Joi.string().required(),
     day: Joi.number().required(),
     night: Joi.number().required(),
     dateTrip: Joi.date().required(),
@@ -23,9 +42,13 @@ exports.addTrip = async (req, res) => {
 
   const { error } = schema.validate(req.body);
 
-  // check if error return response 400
   if (error) {
     console.log(error);
+    // Hapus gambar yang diupload jika validasi gagal
+    if (req.files && req.files.image) {
+      const arrayFilename = req.files.image.map((item) => item.filename);
+      deleteFiles(arrayFilename);
+    }
     return res.status(400).send({
       status: "failed",
       error: {
@@ -35,7 +58,10 @@ exports.addTrip = async (req, res) => {
   }
 
   try {
-    const arrayFilename = req.files.image.map((item) => item.filename);
+    let arrayFilename = [];
+    if (req.files && req.files.image) {
+      arrayFilename = req.files.image.map((item) => item.filename);
+    }
 
     const newTrip = await trip.create({
       ...req.body,
@@ -46,15 +72,8 @@ exports.addTrip = async (req, res) => {
       where: {
         id: newTrip.id,
       },
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idCountry"],
+        exclude: ["createdAt", "updatedAt", "country"],
       },
     });
 
@@ -75,6 +94,11 @@ exports.addTrip = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    // Hapus gambar yang diupload jika terjadi error server
+    if (req.files && req.files.image) {
+      const arrayFilename = req.files.image.map((item) => item.filename);
+      deleteFiles(arrayFilename);
+    }
     res.status(500).send({
       status: "failed",
       message: "Server error",
@@ -96,7 +120,7 @@ exports.getTrips = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
-          "idCountry",
+          "country",
           "accomodation",
           "transportation",
           "eat",
@@ -152,7 +176,7 @@ exports.getTrip = async (req, res) => {
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idCountry"],
+        exclude: ["createdAt", "updatedAt", "country"],
       },
     });
 
@@ -201,7 +225,7 @@ exports.updateTrip = async (req, res) => {
         },
       },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idCountry"],
+        exclude: ["createdAt", "updatedAt", "country"],
       },
     });
 
