@@ -1,7 +1,7 @@
 // Import React
-import {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import moment from "moment";
 // Import Components
@@ -12,7 +12,7 @@ import ModalRegister from "../../components/Items/modal/ModalRegister.js";
 
 // Import Style
 import "./DetailTrip.css";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Calender from "../../img/calender.png";
 import Plane from "../../img/plane.png";
@@ -21,12 +21,12 @@ import Time from "../../img/time.png";
 import Meal from "../../img/meal.png";
 
 // Import API
-import {API} from "../../config/api";
+import { API } from "../../config/api";
 
 toast.configure();
 
 function DetailTrip() {
-  const {id} = useParams();
+  const { id } = useParams();
   const history = useHistory();
 
   const currentState = useSelector((state) => state);
@@ -88,18 +88,18 @@ function DetailTrip() {
   }, []);
 
   const handleClose = () => {
-    setShow({login: false, register: false});
+    setShow({ login: false, register: false });
   };
 
   const handleShowLogin = () => {
-    setShow((prevState) => ({...prevState, login: true}));
+    setShow((prevState) => ({ ...prevState, login: true }));
   };
 
   const handleSwitch = () => {
     if (show.login) {
-      setShow({login: false, register: true});
+      setShow({ login: false, register: true });
     } else {
-      setShow({login: true, register: false});
+      setShow({ login: true, register: false });
     }
   };
 
@@ -107,7 +107,7 @@ function DetailTrip() {
     if (transaction?.counterQty < detailTrip?.quota) {
       const add = transaction?.counterQty + 1;
       const updateQuota = detailTrip?.quota - add;
-      setQuotaRemaining({quota: updateQuota});
+      setQuotaRemaining({ quota: updateQuota });
       setTransaction(() => ({
         tripId: detailTrip?.id,
         userId: stateAuth.id,
@@ -121,7 +121,7 @@ function DetailTrip() {
     if (transaction?.counterQty > 0) {
       const subtract = transaction?.counterQty - 1;
       const updateQuota = detailTrip?.quota - subtract;
-      setQuotaRemaining({quota: updateQuota});
+      setQuotaRemaining({ quota: updateQuota });
       setTransaction(() => ({
         tripId: detailTrip?.id,
         userId: stateAuth.id,
@@ -205,7 +205,7 @@ function DetailTrip() {
           <h1>
             {detailTrip?.day}D/{detailTrip?.night}N {detailTrip?.title}
           </h1>
-          <small>{detailTrip?.country.name}</small>
+          <small>{detailTrip?.country}</small>
         </div>
 
         {/* IMAGE TOUR */}
@@ -284,7 +284,7 @@ function DetailTrip() {
               }}
             >
               <img src={Hotel} alt="" />
-              <p style={{paddingLeft: "10px"}}>{detailTrip?.accomodation}</p>
+              <p style={{ paddingLeft: "10px" }}>{detailTrip?.accomodation}</p>
             </div>
           </div>
           <div>
@@ -295,7 +295,9 @@ function DetailTrip() {
               }}
             >
               <img src={Plane} alt="" />
-              <p style={{paddingLeft: "10px"}}>{detailTrip?.transportation}</p>
+              <p style={{ paddingLeft: "10px" }}>
+                {detailTrip?.transportation}
+              </p>
             </div>
           </div>
           <div>
@@ -306,7 +308,7 @@ function DetailTrip() {
               }}
             >
               <img src={Meal} alt="" />
-              <p style={{paddingLeft: "10px"}}>{detailTrip?.eat}</p>
+              <p style={{ paddingLeft: "10px" }}>{detailTrip?.eat}</p>
             </div>
           </div>
           <div>
@@ -317,7 +319,7 @@ function DetailTrip() {
               }}
             >
               <img src={Time} alt="" />
-              <p style={{paddingLeft: "10px"}}>
+              <p style={{ paddingLeft: "10px" }}>
                 {detailTrip?.day} Day {detailTrip?.night}Night
               </p>
             </div>
@@ -330,7 +332,7 @@ function DetailTrip() {
               }}
             >
               <img src={Calender} alt="" />
-              <p style={{paddingLeft: "10px"}}>
+              <p style={{ paddingLeft: "10px" }}>
                 {moment(detailTrip?.dateTrip).format("l")}
               </p>
             </div>
@@ -354,14 +356,14 @@ function DetailTrip() {
         <p className="description">{detailTrip?.description}</p>
 
         <section className="detail-calculate mb-5">
-          <div style={{marginTop: "15px"}}>
+          <div style={{ marginTop: "15px" }}>
             <div className="d-flex justify-content-between fw-bold fs-5">
-              <div style={{color: "orange", fontFamily: "Avenir"}}>
+              <div style={{ color: "orange", fontFamily: "Avenir" }}>
                 Rp.
-                <span style={{marginLeft: "10px"}}>
+                <span style={{ marginLeft: "10px" }}>
                   {rupiah(detailTrip?.price)}
                 </span>
-                /<span style={{color: "black"}}>Person</span>
+                /<span style={{ color: "black" }}>Person</span>
               </div>
               <div className="quantity">
                 <button
@@ -376,7 +378,10 @@ function DetailTrip() {
                 >
                   -
                 </button>
-                <div className="d-inline-block text-center" style={{width: 75}}>
+                <div
+                  className="d-inline-block text-center"
+                  style={{ width: 75 }}
+                >
                   {transaction.counterQty}
                 </div>
                 <button
