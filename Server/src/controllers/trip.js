@@ -24,6 +24,7 @@ function deleteFiles(filenames) {
     });
   });
 }
+
 exports.addTrip = async (req, res) => {
   const schema = Joi.object({
     title: Joi.string().min(5).required(),
@@ -40,14 +41,20 @@ exports.addTrip = async (req, res) => {
     description: Joi.string().min(10).max(1000).required(),
   });
 
+  // Validate request body
   const { error } = schema.validate(req.body);
 
   if (error) {
+    // Log the error
     console.log(error);
+
+    // Delete any uploaded images if validation fails
     if (req.files && req.files.image) {
       const arrayFilename = req.files.image.map((item) => item.filename);
-      deleteFiles(arrayFilename);
+      deleteFiles(arrayFilename); // Ensure this function is implemented to delete files
     }
+
+    // Return error response
     return res.status(400).send({
       status: "failed",
       error: {
@@ -57,16 +64,19 @@ exports.addTrip = async (req, res) => {
   }
 
   try {
+    // Process images if uploaded
     let arrayFilename = [];
     if (req.files && req.files.image) {
       arrayFilename = req.files.image.map((item) => item.filename);
     }
 
+    // Save trip data to the database
     const newTrip = await trip.create({
       ...req.body,
-      image: JSON.stringify(arrayFilename),
+      image: JSON.stringify(arrayFilename), // Store image file names in database
     });
 
+    // Fetch saved trip data
     let tripData = await trip.findOne({
       where: {
         id: newTrip.id,
@@ -78,6 +88,7 @@ exports.addTrip = async (req, res) => {
 
     tripData = JSON.parse(JSON.stringify(tripData));
 
+    // Format the trip data to include URLs for the images
     const newData = {
       ...tripData,
       image: JSON.parse(tripData.image).map((image, index) => ({
@@ -93,11 +104,14 @@ exports.addTrip = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    // Hapus gambar yang diupload jika terjadi error server
+
+    // Delete any uploaded images if an error occurs during trip creation
     if (req.files && req.files.image) {
       const arrayFilename = req.files.image.map((item) => item.filename);
-      deleteFiles(arrayFilename);
+      deleteFiles(arrayFilename); // Ensure this function is implemented to delete files
     }
+
+    // Return server error response
     res.status(500).send({
       status: "failed",
       message: "Server error",
@@ -108,13 +122,6 @@ exports.addTrip = async (req, res) => {
 exports.getTrips = async (req, res) => {
   try {
     let data = await trip.findAll({
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
       attributes: {
         exclude: [
           "createdAt",
@@ -167,13 +174,6 @@ exports.getTrip = async (req, res) => {
       where: {
         id,
       },
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
       attributes: {
         exclude: ["createdAt", "updatedAt", "country"],
       },
@@ -215,13 +215,6 @@ exports.updateTrip = async (req, res) => {
     const updatedData = await trip.findOne({
       where: {
         id,
-      },
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
       },
       attributes: {
         exclude: ["createdAt", "updatedAt", "country"],

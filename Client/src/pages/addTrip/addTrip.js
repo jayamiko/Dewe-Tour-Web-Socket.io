@@ -11,7 +11,7 @@ import { getCountries } from "../../api/countries";
 const AddTrip = () => {
   const [input, setInput] = useState({
     title: "",
-    country_id: "",
+    country: "",
     accomodation: "",
     transportation: "",
     eat: "",

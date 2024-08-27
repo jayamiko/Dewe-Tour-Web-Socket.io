@@ -7,19 +7,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      trip.belongsTo(models.country, {
-        as: "country",
-        foreignKey: {
-          name: "country_id",
-        },
-      });
-    }
+    static associate(models) {}
   }
   trip.init(
     {
       title: DataTypes.STRING,
-      country_id: DataTypes.INTEGER,
+      country: DataTypes.STRING,
       accomodation: DataTypes.STRING,
       transportation: DataTypes.STRING,
       eat: DataTypes.STRING,
