@@ -6,7 +6,7 @@ const path = require("path");
 
 function deleteFiles(filenames) {
   filenames.forEach((filename) => {
-    const filePath = path.join(__dirname, "uploads", filename);
+    const filePath = path.join(__dirname, "../../uploads", filename);
     fs.access(filePath, fs.constants.F_OK, (err) => {
       if (err) {
         console.error(`File not found: ${filePath}`);
@@ -44,7 +44,6 @@ exports.addTrip = async (req, res) => {
 
   if (error) {
     console.log(error);
-    // Hapus gambar yang diupload jika validasi gagal
     if (req.files && req.files.image) {
       const arrayFilename = req.files.image.map((item) => item.filename);
       deleteFiles(arrayFilename);
