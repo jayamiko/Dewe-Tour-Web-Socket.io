@@ -11,6 +11,7 @@ body {
 
 .background-nav {
   background-image: url(./img//Header.png);
+  background-repeat: no-repeat;
 }
 
 .App-logo {

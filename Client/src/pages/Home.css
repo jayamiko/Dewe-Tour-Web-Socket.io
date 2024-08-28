@@ -1,0 +1,49 @@
+.header-image {
+  background: url("../img/18pfua2dz5k01.png") no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 80vh;
+}
+
+.container-lg {
+  margin-top: 100px;
+}
+
+.container-lg h1 {
+  font-weight: 600;
+  font-size: 64px;
+  font-size: 4rem;
+  color: #fff;
+}
+
+.container-lg h2 {
+  font-weight: 200;
+  font-size: 2rem;
+
+  color: #ffffff;
+}
+
+.service-card {
+  margin-top: -50px;
+}
+
+@media (max-width: 1024px) {
+  .header-image {
+    height: 75vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-image {
+    height: 50vh;
+  }
+  .container-lg {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-image {
+    height: 40vh;
+  }
+}

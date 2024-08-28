@@ -5,7 +5,7 @@ import store from "../../reducers/store";
 import { useSelector } from "react-redux";
 
 // Import Style
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import Palm from "../../img/palm1.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,15 +13,18 @@ import "react-toastify/dist/ReactToastify.css";
 // Import API
 import { API, setAuthToken } from "../../config/api";
 import checkUser from "../../config/auth";
+import CModal from "../Modal/CModal";
 
 toast.configure();
 
-export default function Login() {
+export default function Login({
+  showModal,
+  setShowModal,
+  setShowModalRegister,
+}) {
   const history = useHistory();
 
   const isLoginSession = useSelector((state) => state.isLogin);
-  const [modal, setModal] = useState(false);
-  const [registerModal, setRegisterModal] = useState(false);
 
   const checkAuth = () => {
     if (isLoginSession) {
@@ -30,22 +33,12 @@ export default function Login() {
   };
   checkAuth();
 
-  const openModalLogin = () => {
-    setModal(true);
-    setRegisterModal(false);
-  };
-  const openModalRegister = () => {
-    setRegisterModal(true);
-    setModal(false);
-  };
-  const closeModalLogin = () => setModal(false);
+  const closeModal = () => setShowModal(false);
 
   const [formLogin, setFormLogin] = useState({
     email: "",
     password: "",
   });
-
-  const { email, password } = formLogin;
 
   const LoginHandleChange = (e) => {
     setFormLogin({
@@ -102,63 +95,59 @@ export default function Login() {
   }, []);
 
   return (
-    <>
-      <button onClick={openModalLogin} className="btn-login border-red" href>
-        Login
-      </button>
-      <Modal show={modal}>
-        <Modal.Body className="modal-content">
-          <img src={Palm} alt=""></img>
-          <h2 className="text-center my-5">Login</h2>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            onClick={closeModalLogin}
-          ></button>
-          <Form>
-            <Form.Group className="mb-4">
-              <Form.Label className="fw-bold">Email address</Form.Label>
-              <Form.Control
-                name="email"
-                onChange={LoginHandleChange}
-                type="email"
-                id="email"
-                required
-              />
-            </Form.Group>
+    <CModal show={showModal}>
+      <img src={Palm} alt=""></img>
+      <h2 className="text-center my-5">Login</h2>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        onClick={closeModal}
+      ></button>
+      <Form>
+        <Form.Group className="mb-4">
+          <Form.Label className="fw-bold">Email address</Form.Label>
+          <Form.Control
+            name="email"
+            onChange={LoginHandleChange}
+            type="email"
+            id="email"
+            required
+          />
+        </Form.Group>
 
-            <Form.Group className="mb-4">
-              <Form.Label className="fw-bold">Password</Form.Label>
-              <Form.Control
-                name="password"
-                onChange={LoginHandleChange}
-                type="password"
-                required
-                id="password"
-              />
-            </Form.Group>
-            <div class="d-flex flex-column gap-2 ">
-              <Button
-                onClick={loginSession}
-                className="text-white fw-bold"
-                variant="warning"
-                type="submit"
-                required
-              >
-                Submit
-              </Button>
-              <small className="text-center">
-                Don't have an account ? click{" "}
-                <a onClick={openModalRegister} href="">
-                  Here
-                </a>
-              </small>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </>
+        <Form.Group className="mb-4">
+          <Form.Label className="fw-bold">Password</Form.Label>
+          <Form.Control
+            name="password"
+            onChange={LoginHandleChange}
+            type="password"
+            required
+            id="password"
+          />
+        </Form.Group>
+        <div class="d-flex flex-column gap-2 ">
+          <Button
+            onClick={loginSession}
+            className="text-white fw-bold"
+            variant="warning"
+            type="submit"
+            required
+          >
+            Submit
+          </Button>
+          <small className="text-center">
+            Don't have an account ?
+            <span
+              className="cursor-pointer px-1"
+              onClick={() => setShowModalRegister(true)}
+            >
+              Click Here
+            </span>
+          </small>
+        </div>
+      </Form>
+    </CModal>
   );
 }

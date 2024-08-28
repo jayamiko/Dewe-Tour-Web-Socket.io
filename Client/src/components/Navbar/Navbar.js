@@ -14,11 +14,28 @@ import Icon from "../../img/Icon1.png";
 import { Navbar, Nav } from "react-bootstrap";
 import Button from "../Utils/Button";
 import Image from "../Utils/Image";
+import { useState } from "react";
 
 function NavbarComp() {
   const currentState = useSelector((state) => state);
   const isAdmin = currentState.user.status === "admin";
   const isLoginSession = useSelector((state) => state.isLogin);
+
+  const [showModalLogin, setShowModalLogin] = useState(false);
+  const [showModalRegister, setShowModalRegister] = useState(false);
+
+  const openModalLogin = () => {
+    setShowModalLogin(true);
+    setShowModalRegister(false);
+  };
+
+  const openModalRegister = () => {
+    setShowModalRegister(true);
+    setShowModalLogin(false);
+  };
+
+  console.log(isLoginSession, " hdjd");
+
   return (
     <>
       {isLoginSession || isAdmin ? (
@@ -46,21 +63,32 @@ function NavbarComp() {
                 <Button
                   bgColor="skyblue"
                   color="white"
-                  onClick={null}
+                  onClick={openModalLogin}
                   disabled={false}
                 >
                   Login
                 </Button>
+
+                <Login
+                  showModal={showModalLogin}
+                  setShowModal={setShowModalLogin}
+                  setShowModalRegister={setShowModalRegister}
+                />
+
                 <Button
                   bgColor="#ffaf00"
                   color="white"
-                  onClick={null}
+                  onClick={openModalRegister}
                   disabled={false}
                 >
                   Register
                 </Button>
-                {/* <Login />
-                <Register /> */}
+
+                <Register
+                  showModal={showModalRegister}
+                  setShowModal={setShowModalRegister}
+                  setShowModalLogin={setShowModalLogin}
+                />
               </Nav>
             </Navbar.Collapse>
           </Navbar>

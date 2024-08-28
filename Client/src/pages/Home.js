@@ -8,25 +8,24 @@ import { Container } from "react-bootstrap";
 import noResult from "../img/no-result.png";
 
 // Import Components
-import Header from "../components/Header/Header";
-import Navbar from "../components/Navbar/Navbar";
 import GroupTour from "../components/Main/Main";
-import Footer from "../components/Footer/Footer";
 
 // Import API
 import { API } from "../config/api";
+import Image from "../components/Utils/Image";
+import NavbarComp from "../components/Navbar/Navbar";
+import Card from "../components/Items/card/Card";
+import services from "../data/services.json";
+import "./Home.css";
 
 function Home() {
   const [trips, setTrips] = useState(null);
-  const [searchData, setSearchData] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
   const currentState = useSelector((state) => state);
   const isAdmin = currentState.user.status === "admin";
 
   const getTrips = async () => {
     try {
       const response = await API.get("/trips");
-      console.log(response.data.data);
       setTrips(response.data.data);
     } catch (error) {
       console.log(error);
@@ -37,42 +36,58 @@ function Home() {
     getTrips();
   }, []);
 
+  console.log(trips);
+
   return (
     <>
+      <NavbarComp />
       {isAdmin ? (
         <>
           <GroupTour data={trips} isAdmin={isAdmin} />
         </>
       ) : (
         <div>
-          <Header
-            trips={trips}
-            setIsSearching={setIsSearching}
-            searchData={searchData}
-            setSearchData={setSearchData}
-          />
-          {isSearching ? (
-            <div className="mt-5">
-              <GroupTour data={trips} searchData={searchData} />
+          <div className="header-image">
+            <div className="container-lg container">
+              <h1>Explore</h1>
+              <h2>your amazing city together</h2>
+              <span className="text-white">Find great places to holliday</span>
             </div>
-          ) : (
-            <>
-              {trips === null ? (
-                <div className="d-flex justify-content-center align-items-center fs-4">
-                  <img
-                    src={noResult}
-                    alt="no-result"
-                    width="450px"
-                    height="450px"
-                  />
-                </div>
-              ) : (
-                <Container fluid className="main">
-                  <GroupTour data={trips} />
-                </Container>
-              )}
-            </>
-          )}
+          </div>
+
+          {/* SERVICE CARDS */}
+          <section className="container service-card relative flex justify-center grid grid-cols-4 gap-4">
+            {services.map((service, index) => {
+              return (
+                <Card
+                  key={index}
+                  image={service.image}
+                  title={service.title}
+                  subtitle={service.subtitle}
+                />
+              );
+            })}
+          </section>
+          {/* TOUR SECTION */}
+          <section
+            id="tour-section"
+            className="flex items-center justify-center mt-5 mb-5"
+          >
+            {trips === null ? (
+              <div>
+                <Image
+                  src={noResult}
+                  width={400}
+                  height={400}
+                  alt="not-found"
+                />
+              </div>
+            ) : (
+              <Container fluid className="main">
+                <GroupTour data={trips} />
+              </Container>
+            )}
+          </section>
         </div>
       )}
     </>

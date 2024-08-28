@@ -22,14 +22,6 @@
   border-radius: 4px;
 }
 
-.modal-content img {
-  position: absolute;
-  left: 0;
-  right: 61.54%;
-  top: 0;
-  bottom: 87.81%;
-}
-
 .btn-close {
   position: absolute;
   left: 90%;
