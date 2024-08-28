@@ -14,6 +14,7 @@ import { Navbar, Nav } from "react-bootstrap";
 // Import API
 import checkUser from "../../../config/auth";
 import { setAuthToken } from "../../../config/api";
+import Image from "../../Utils/Image";
 
 toast.configure();
 
@@ -47,7 +48,7 @@ function AdminDropdown() {
       <Navbar expand="lg" className="container">
         <Navbar.Brand href="/">
           <Link to="/">
-            <img src={Icon} alt="icon-dewetour" width={200} height={48} />
+            <Image src={Icon} alt="icon-dewetour" width={200} height={48} />
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle

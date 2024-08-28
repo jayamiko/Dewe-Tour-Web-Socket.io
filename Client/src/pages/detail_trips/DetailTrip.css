@@ -1,14 +1,4 @@
-.container-detail {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  height: max-content;
-  padding-left: 250px;
-  padding-right: 250px;
-  padding-top: 50px;
-}
-
-.container-detail h1 {
+.title {
   font-family: "Avenir";
   font-style: normal;
   font-weight: 900;
@@ -17,17 +7,6 @@
   display: flex;
   align-items: center;
   color: #000000;
-}
-
-.title-info {
-  font-family: "Avenir" !important;
-  font-style: normal !important;
-  font-weight: 800 !important;
-  font-size: 13px !important;
-  line-height: 18px !important;
-  display: flex !important;
-  align-items: center !important;
-  color: #a8a8a8 !important;
 }
 
 .info-trip {
@@ -68,4 +47,24 @@
   text-align: justify;
   color: #a8a8a8;
   width: 1018px;
+}
+
+.totalPrice {
+  color: orange;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Avenir;
+}
+
+.btn-booking {
+  background: orange;
+  width: 200px;
+  height: 50px;
+  border-radius: 5px;
+  font-family: Avenir;
+  line-height: 25px;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+  color: white;
 }

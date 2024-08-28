@@ -32,8 +32,20 @@ code {
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
 .flex {
   display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .flex-col {
@@ -51,6 +63,10 @@ code {
 
 .justify-end {
   justify-content: end;
+}
+
+.justify-between {
+  justify-content: space-between;
 }
 
 .btn {
@@ -79,16 +95,36 @@ code {
   color: #fff;
 }
 
+.text-black {
+  color: #000;
+}
+
+.text-carrot {
+  color: #ffaf00;
+}
+
 .bg-carrot {
   background-color: #ffaf00;
+}
+
+.rounded-full {
+  border-radius: 50%;
 }
 
 .grid {
   display: grid;
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .grid-cols-4 {
   grid-template-columns: repeat(4, 1fr);
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-4 {

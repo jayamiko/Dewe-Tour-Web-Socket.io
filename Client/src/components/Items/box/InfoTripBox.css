@@ -1,0 +1,10 @@
+.title-info {
+  font-family: "Avenir" !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  line-height: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  color: #a8a8a8 !important;
+}

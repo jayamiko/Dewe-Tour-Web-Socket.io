@@ -45,54 +45,52 @@ function NavbarComp() {
           <UserDropdown />
         )
       ) : (
-        <>
-          <Navbar expand="lg" className="container">
-            <Link to="/">
-              <Image src={Icon} alt="dewe-tour-logo" />
-            </Link>
+        <Navbar expand="lg" className="container">
+          <Link to="/">
+            <Image src={Icon} alt="dewe-tour-logo" />
+          </Link>
 
-            <Navbar.Toggle
-              aria-controls="basic-navbar-nav"
-              style={{ background: "white" }}
-            />
-            <Navbar.Collapse
-              id="basic-navbar-nav"
-              className="flex items-center justify-end"
-            >
-              <Nav className="space-x-4">
-                <Button
-                  bgColor="skyblue"
-                  color="white"
-                  onClick={openModalLogin}
-                  disabled={false}
-                >
-                  Login
-                </Button>
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            style={{ background: "white" }}
+          />
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className="flex items-center justify-end"
+          >
+            <Nav className="space-x-4">
+              <Button
+                bgColor="skyblue"
+                color="white"
+                onClick={openModalLogin}
+                disabled={false}
+              >
+                Login
+              </Button>
 
-                <Login
-                  showModal={showModalLogin}
-                  setShowModal={setShowModalLogin}
-                  setShowModalRegister={setShowModalRegister}
-                />
+              <Login
+                showModal={showModalLogin}
+                setShowModal={setShowModalLogin}
+                setShowModalRegister={setShowModalRegister}
+              />
 
-                <Button
-                  bgColor="#ffaf00"
-                  color="white"
-                  onClick={openModalRegister}
-                  disabled={false}
-                >
-                  Register
-                </Button>
+              <Button
+                bgColor="#ffaf00"
+                color="white"
+                onClick={openModalRegister}
+                disabled={false}
+              >
+                Register
+              </Button>
 
-                <Register
-                  showModal={showModalRegister}
-                  setShowModal={setShowModalRegister}
-                  setShowModalLogin={setShowModalLogin}
-                />
-              </Nav>
-            </Navbar.Collapse>
-          </Navbar>
-        </>
+              <Register
+                showModal={showModalRegister}
+                setShowModal={setShowModalRegister}
+                setShowModalLogin={setShowModalLogin}
+              />
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
       )}
     </>
   );

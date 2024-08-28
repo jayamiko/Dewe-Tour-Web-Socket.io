@@ -21,6 +21,7 @@ import "./Home.css";
 function Home() {
   const [trips, setTrips] = useState(null);
   const currentState = useSelector((state) => state);
+  const isLoginSession = useSelector((state) => state.isLogin);
   const isAdmin = currentState.user.status === "admin";
 
   const getTrips = async () => {
@@ -40,7 +41,7 @@ function Home() {
 
   return (
     <>
-      <NavbarComp />
+      {isLoginSession && <NavbarComp />}
       {isAdmin ? (
         <>
           <GroupTour data={trips} isAdmin={isAdmin} />
@@ -48,6 +49,7 @@ function Home() {
       ) : (
         <div>
           <div className="header-image">
+            {!isLoginSession && <NavbarComp />}
             <div className="container-lg container">
               <h1>Explore</h1>
               <h2>your amazing city together</h2>

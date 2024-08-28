@@ -6,9 +6,6 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
-import ModalLogin from "../../components/Items/modal/ModalLogin";
-import ModalRegister from "../../components/Items/modal/ModalRegister.js";
 
 // Import Style
 import "./DetailTrip.css";
@@ -22,6 +19,10 @@ import Meal from "../../img/meal.png";
 
 // Import API
 import { API } from "../../config/api";
+import Image from "../../components/Utils/Image.jsx";
+import InfoTripBox from "../../components/Items/box/InfoTripBox.jsx";
+import Login from "../../components/Navbar/Login.js";
+import Register from "../../components/Navbar/Register.js";
 
 toast.configure();
 
@@ -32,6 +33,9 @@ function DetailTrip() {
   const currentState = useSelector((state) => state);
   const stateAuth = currentState.user;
   const isLoginSession = useSelector((state) => state.isLogin);
+
+  const [showModalLogin, setShowModalLogin] = useState(false);
+  const [showModalRegister, setShowModalRegister] = useState(false);
 
   const [detailTrip, setDetailTrip] = useState(null);
 
@@ -47,19 +51,13 @@ function DetailTrip() {
 
   useEffect(() => {
     getDetailTrip(id);
-  }, []);
+  }, [id]);
 
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       minimumFractionDigits: 0,
     }).format(number);
   };
-
-  const [show, setShow] = useState({
-    login: false,
-    register: false,
-    confirm: false,
-  });
 
   const [transaction, setTransaction] = useState({
     counterQty: 1,
@@ -75,33 +73,16 @@ function DetailTrip() {
 
   const [dataTransaction, setDataTransaction] = useState([]);
 
-  const getDataTransactionsByUserId = async () => {
-    const response = await API.get("/transactions");
-    const filteredTransactions = response.data.data.filter(
-      (item) => item.user.id === stateAuth.id
-    );
-    setDataTransaction(filteredTransactions[filteredTransactions.length - 1]);
-  };
-
   useEffect(() => {
+    const getDataTransactionsByUserId = async () => {
+      const response = await API.get("/transactions");
+      const filteredTransactions = response.data.data.filter(
+        (item) => item.user.id === stateAuth.id
+      );
+      setDataTransaction(filteredTransactions[filteredTransactions.length - 1]);
+    };
     getDataTransactionsByUserId();
-  }, []);
-
-  const handleClose = () => {
-    setShow({ login: false, register: false });
-  };
-
-  const handleShowLogin = () => {
-    setShow((prevState) => ({ ...prevState, login: true }));
-  };
-
-  const handleSwitch = () => {
-    if (show.login) {
-      setShow({ login: false, register: true });
-    } else {
-      setShow({ login: true, register: false });
-    }
-  };
+  }, [stateAuth.id]);
 
   const handleAdd = () => {
     if (transaction?.counterQty < detailTrip?.quota) {
@@ -183,216 +164,97 @@ function DetailTrip() {
 
         history.push("/payment");
       } else {
-        handleShowLogin();
+        setShowModalLogin(true);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  console.log(detailTrip?.image.slice(1, 4));
+
   return (
     <>
       <div className="background-nav">
         <Navbar />
       </div>
-      <div className="container-detail">
+      <div className="container min-h-screen py-5">
         {/* TITLE */}
-        <div
-          style={{
-            width: "max-content",
-          }}
-        >
-          <h1>
+        <div>
+          <h1 className="title">
             {detailTrip?.day}D/{detailTrip?.night}N {detailTrip?.title}
           </h1>
           <small>{detailTrip?.country}</small>
         </div>
 
         {/* IMAGE TOUR */}
-        <img
+        <Image
           src={detailTrip?.image[0].url}
-          alt="/"
-          style={{
-            width: "1018px",
-            height: "361.16px",
-            borderRadius: "5px",
-          }}
+          styles="w-full"
+          alt="main-image"
         />
-        <div
-          style={{
-            display: "flex",
-            width: "1018px",
-            justifyContent: "space-between",
-          }}
-        >
-          <img
-            src={detailTrip?.image[1].url}
-            alt="/"
-            style={{
-              marginRight: "15px",
-              width: "329.73px",
-              height: "167.64px",
-              borderRadius: "5px",
-              marginTop: "15px",
-            }}
-          />
-          <img
-            src={detailTrip?.image[2].url}
-            alt="/"
-            style={{
-              marginRight: "15px",
-              width: "329.73px",
-              height: "167.64px",
-              borderRadius: "5px",
-              marginTop: "15px",
-            }}
-          />
-          <img
-            src={detailTrip?.image[3].url}
-            alt="/"
-            style={{
-              width: "329.73px",
-              height: "167.64px",
-              borderRadius: "5px",
-              marginTop: "15px",
-            }}
-          />
+        <div className="flex justify-between mt-2">
+          {detailTrip?.image.slice(1, 4).map((trip, i) => {
+            return <Image key={i} src={trip.url} width="33%" />;
+          })}
         </div>
 
         {/* INFO DESCRIPTION */}
-        <h3
-          style={{
-            fontFamily: "Avenir",
-            fontWeight: "900",
-            fontSize: "18px",
-            lineHeight: "25px",
-            display: "flex",
-            alignItems: "center",
-            color: "#000000",
-            marginTop: "25px",
-          }}
-        >
-          Information Trip
-        </h3>
+        <h5 className="text-black mt-4 font-bold">Information Trip</h5>
 
-        <div className="info-trip">
-          <div>
-            <p className="title-info">Accomodation</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Hotel} alt="" />
-              <p style={{ paddingLeft: "10px" }}>{detailTrip?.accomodation}</p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Transportation</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Plane} alt="" />
-              <p style={{ paddingLeft: "10px" }}>
-                {detailTrip?.transportation}
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Eat</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Meal} alt="" />
-              <p style={{ paddingLeft: "10px" }}>{detailTrip?.eat}</p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Duration</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Time} alt="" />
-              <p style={{ paddingLeft: "10px" }}>
-                {detailTrip?.day} Day {detailTrip?.night}Night
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Date Trip</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Calender} alt="" />
-              <p style={{ paddingLeft: "10px" }}>
-                {moment(detailTrip?.dateTrip).format("l")}
-              </p>
-            </div>
-          </div>
+        <div className="w-full flex flex-wrap justify-between gap-2">
+          <InfoTripBox
+            title="Accomodation"
+            image={Hotel}
+            description={detailTrip?.accomodation}
+          />
+          <InfoTripBox
+            title="Transportation"
+            image={Plane}
+            description={detailTrip?.transportation}
+          />
+          <InfoTripBox
+            title="Transportation"
+            image={Meal}
+            description={detailTrip?.eat}
+          />
+          <InfoTripBox
+            title="Date Trip"
+            image={Time}
+            description={`${detailTrip?.day} Day ${detailTrip?.night}Night`}
+          />
+          <InfoTripBox
+            title="Date Trip"
+            image={Calender}
+            description={moment(detailTrip?.dateTrip).format("l")}
+          />
         </div>
 
-        <h3
-          style={{
-            fontFamily: "Avenir",
-            fontWeight: "900",
-            fontSize: "18px",
-            lineHeight: "25px",
-            display: "flex",
-            alignItems: "center",
-            color: "#000000",
-            marginTop: "25px",
-          }}
-        >
-          Description
-        </h3>
+        <h5 className="text-black mt-4 font-bold">Description</h5>
+
         <p className="description">{detailTrip?.description}</p>
 
         <section className="detail-calculate mb-5">
-          <div style={{ marginTop: "15px" }}>
+          <div>
             <div className="d-flex justify-content-between fw-bold fs-5">
-              <div style={{ color: "orange", fontFamily: "Avenir" }}>
+              <div style={{ fontFamily: "Avenir" }} className="text-carrot">
                 Rp.
-                <span style={{ marginLeft: "10px" }}>
-                  {rupiah(detailTrip?.price)}
-                </span>
-                /<span style={{ color: "black" }}>Person</span>
+                <span className="ml-4">{rupiah(detailTrip?.price)}</span>/
+                <span className="text-black">Person</span>
               </div>
               <div className="quantity">
                 <button
-                  style={{
-                    background: "orange",
-                    color: "white",
-                    borderRadius: "10px",
-                    width: "26.61px",
-                    height: "30px",
-                  }}
                   onClick={handleSubtract}
+                  className="bg-carrot text-white rounded"
                 >
                   -
                 </button>
-                <div
-                  className="d-inline-block text-center"
-                  style={{ width: 75 }}
-                >
+                <span className="text-center px-2">
                   {transaction.counterQty}
-                </div>
+                </span>
                 <button
-                  style={{
-                    background: "orange",
-                    color: "white",
-                    borderRadius: "10px",
-                    width: "26.61px",
-                    height: "30px",
-                  }}
                   onClick={handleAdd}
+                  className="bg-carrot text-white rounded"
                 >
                   +
                 </button>
@@ -401,55 +263,35 @@ function DetailTrip() {
             <hr />
             <div className="d-flex justify-content-between fw-bold">
               <div className="fs-5">Total :</div>
-              <div
-                style={{
-                  color: "orange",
-                  lineHeight: "33px",
-                  fontSize: "24px",
-                  fontWeight: "900",
-                  fontFamily: "Avenir",
-                }}
-              >
-                Rp. {rupiah(totalPrice)}
-              </div>
+              <h4 className="totalPrice">Rp. {rupiah(totalPrice)}</h4>
             </div>
             <hr />
             <div className="d-flex justify-content-end">
               <button
                 type="button"
-                style={{
-                  background: "orange",
-                  width: "213px",
-                  height: "50px",
-                  borderRadius: "5px",
-                  fontFamily: "Avenir",
-                  lineHeight: "25px",
-                  fontSize: "18px",
-                  fontWeight: "900",
-                  textAlign: "center",
-                  color: "white",
-                }}
+                className="btn-booking"
                 onClick={handleSubmit}
               >
                 BOOK NOW
               </button>
+
+              {/* SHOW MODAL IF USER IS LOGIN YET */}
+
+              <Login
+                showModal={showModalLogin}
+                setShowModal={setShowModalLogin}
+                setShowModalRegister={setShowModalRegister}
+              />
+
+              <Register
+                showModal={showModalRegister}
+                setShowModal={setShowModalRegister}
+                setShowModalLogin={setShowModalLogin}
+              />
             </div>
           </div>
-
-          <ModalLogin
-            show={show.login}
-            handleClose={handleClose}
-            handleSwitch={handleSwitch}
-          />
-
-          <ModalRegister
-            show={show.register}
-            handleClose={handleClose}
-            handleSwitch={handleSwitch}
-          />
         </section>
       </div>
-      <Footer />
     </>
   );
 }
