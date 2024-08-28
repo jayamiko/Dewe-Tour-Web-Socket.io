@@ -1,12 +1,11 @@
 .footer-container {
-    background-color: #ffaf00;
-    height: 54px;
-    width: 1507px;
-    line-height: 54px;
-    text-align: center;
-    color: #ffffff;
-    font-weight: 600;
-    position: relative;
-    top: 120px;
-  }
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffaf00;
+  height: 54px;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+}

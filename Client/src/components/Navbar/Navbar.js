@@ -1,6 +1,6 @@
 // Import React
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // Import Components
 import Login from "./Login";
@@ -11,7 +11,9 @@ import UserDropdown from "../Items/dropdown/UserDropdown";
 // Import Style
 import "./Navbar.css";
 import Icon from "../../img/Icon1.png";
-import {Navbar, Nav} from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
+import Button from "../Utils/Button";
+import Image from "../Utils/Image";
 
 function NavbarComp() {
   const currentState = useSelector((state) => state);
@@ -27,23 +29,38 @@ function NavbarComp() {
         )
       ) : (
         <>
-          <Navbar expand="lg" style={{paddingRight: "50px"}}>
-            <div style={{paddingLeft: "50px"}}>
-              <Link to="/">
-                <img src={Icon} alt="icon" className="icon-dewetour" />
-              </Link>
-            </div>
+          <Navbar expand="lg" className="container">
+            <Link to="/">
+              <Image src={Icon} alt="dewe-tour-logo" />
+            </Link>
 
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
-              style={{background: "white"}}
+              style={{ background: "white" }}
             />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="#login">
-                  <Login />
-                  <Register />
-                </Nav.Link>
+            <Navbar.Collapse
+              id="basic-navbar-nav"
+              className="flex items-center justify-end"
+            >
+              <Nav className="space-x-4">
+                <Button
+                  bgColor="skyblue"
+                  color="white"
+                  onClick={null}
+                  disabled={false}
+                >
+                  Login
+                </Button>
+                <Button
+                  bgColor="#ffaf00"
+                  color="white"
+                  onClick={null}
+                  disabled={false}
+                >
+                  Register
+                </Button>
+                {/* <Login />
+                <Register /> */}
               </Nav>
             </Navbar.Collapse>
           </Navbar>

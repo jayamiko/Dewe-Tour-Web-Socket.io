@@ -41,7 +41,6 @@ function Home() {
     <>
       {isAdmin ? (
         <>
-          <Navbar />
           <GroupTour data={trips} isAdmin={isAdmin} />
         </>
       ) : (
@@ -74,7 +73,6 @@ function Home() {
               )}
             </>
           )}
-          <Footer />
         </div>
       )}
     </>

@@ -1,17 +1,17 @@
 // Import React
-import {useState, useEffect} from "react";
-import {useHistory} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import store from "../../reducers/store";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 // Import Style
-import {Button, Modal, Form} from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import Palm from "../../img/palm1.png";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Import API
-import {API, setAuthToken} from "../../config/api";
+import { API, setAuthToken } from "../../config/api";
 import checkUser from "../../config/auth";
 
 toast.configure();
@@ -45,7 +45,7 @@ export default function Login() {
     password: "",
   });
 
-  const {email, password} = formLogin;
+  const { email, password } = formLogin;
 
   const LoginHandleChange = (e) => {
     setFormLogin({
@@ -103,7 +103,7 @@ export default function Login() {
 
   return (
     <>
-      <button onClick={openModalLogin} className="btn-login" href>
+      <button onClick={openModalLogin} className="btn-login border-red" href>
         Login
       </button>
       <Modal show={modal}>

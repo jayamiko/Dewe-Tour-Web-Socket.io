@@ -9,7 +9,6 @@
 
 .btn-login {
   border-radius: 4px;
-  padding: 4px 28px;
   color: white;
   background-color: skyblue;
   border: none;
@@ -21,8 +20,6 @@
   background-color: #ffaf00;
   border: none;
   border-radius: 4px;
-  padding: 4px 28px;
-  margin-left: 25px;
 }
 
 .modal-content img {
@@ -68,11 +65,6 @@
   z-index: 2;
 }
 
-.btn-login-register {
-  display: flex !important;
-  position: relative !important;
-}
-
 .navbar-comp {
   display: flex;
   justify-content: center;
@@ -97,36 +89,16 @@
 
 @media only screen and (min-width: 994px) {
   .btn-login {
-    border-radius: 4px;
-    padding: 4px 28px;
-    color: white;
-    background-color: skyblue;
-    border: none;
-    position: relative;
-    left: 860px;
   }
 
   .btn-register {
-    position: relative;
-    left: 870px;
-    border-radius: 4px;
-    color: white;
-    background-color: #ffaf00;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 28px;
-    margin-left: 25px;
   }
 }
 .icon-dewetour {
-  position: relative;
-  left: 50px;
-  bottom: 9px;
 }
 
 @media only screen and (max-width: 810px) {
   .btn-login {
-    margin-top: 25px;
   }
   .btn-register {
     border-radius: 4px;
@@ -152,13 +124,6 @@
 /* Mobile Device */
 @media only screen and (max-width: 550px) {
   .btn-register {
-    border-radius: 4px;
-    color: white;
-    background-color: #ffaf00;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 28px;
-    margin-left: 20px;
   }
   .header-right {
     display: none;

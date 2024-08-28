@@ -1,7 +1,7 @@
 // Import React
-import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {useEffect} from "react";
-import {useSelector} from "react-redux";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // Import Pages
 import DetailTrip from "./pages/detail_trips/DetailTrip";
@@ -17,7 +17,9 @@ import checkUser from "./config/auth";
 import "./App.css";
 
 // Import API
-import {setAuthToken} from "./config/api";
+import { setAuthToken } from "./config/api";
+import Footer from "./components/Footer/Footer";
+import NavbarComp from "./components/Navbar/Navbar";
 
 // init token on axios every time the app is refreshed
 if (localStorage.token) {
@@ -58,6 +60,7 @@ function App() {
           component={ListTransaction}
         />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }
